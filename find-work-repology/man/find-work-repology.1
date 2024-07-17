@@ -1,0 +1,83 @@
+.\" SPDX-FileType: DOCUMENTATION
+.\" SPDX-FileCopyrightText: 2024 Anna <cyber@sysrq.in>
+.\" SPDX-License-Identifier: WTFPL
+.\" No warranty
+.Dd July 1, 2024
+.Dt FIND-WORK-REPOLOGY 1
+.Os
+.Sh NAME
+.Nm "find-work repology"
+.Nd discover ebuilds to improve using Repology data
+.Sh SYNOPSIS
+.Nm
+.Fl r Ar repo
+.Ar command
+.Op Ar arg ...
+.Sh DESCRIPTION
+.Nm
+is a module for
+.Xr find-work 1
+that uses Repology API to find work.
+.Pp
+.
+The options for
+.Nm
+are as follows:
+.Bl -tag -width Ds
+.It Fl r Ar repo , Fl -repo Ar repo
+Repository name on Repology.
+This option is required.
+Some examples for Gentoo include:
+.Bl -bullet -compact -width 1n
+.It
+.Qq gentoo
+.It
+.Qq gentoo_ovl_guru
+.It
+.Qq gentoo_ovl_pentoo
+.It
+.Qq gentoo_ovl_science
+.El
+.
+.El
+.Pp
+.
+.Ar command
+can be one of the following:
+.Bl -tag -width Ds -offset indent
+.It Xo
+.Ic outdated
+.Fl F Ar part
+.Xc
+.Dl Pq alias: Ic out , Ic o
+.Pp
+Find outdated packages.
+.Pp
+This command accepts the following options:
+.Bl -tag -width Ds
+.It Fl F Ar part , Fl -filter Ar part
+Least important version part
+.Po
+major,
+minor,
+patch
+.Pc
+change to be displayed.
+Version part matching is implemented very roughly
+and can lead to false matches.
+.
+.El
+.
+.El
+.Sh EXIT STATUS
+.Ex -std
+.Sh EXAMPLES
+Find outdated GURU packages installed on your system:
+.Pp
+.Dl "$ find-work -I repology -r gentoo_ovl_guru outdated"
+.Sh AUTHORS
+.An -nosplit
+The
+.Nm find-work
+utility was written by
+.An Anna Aq Mt cyber@sysrq.in .
