@@ -1,0 +1,65 @@
+.\" SPDX-FileType: DOCUMENTATION
+.\" SPDX-FileCopyrightText: 2024 Anna <cyber@sysrq.in>
+.\" SPDX-License-Identifier: WTFPL
+.\" No warranty
+.Dd July 1, 2024
+.Dt FIND-WORK-PKGCHECK 1
+.Os
+.Sh NAME
+.Nm "find-work pkgcheck"
+.Nd discover ebuilds to improve using local pkgcheck scans
+.Sh SYNOPSIS
+.Nm
+.Fl r Ar repo
+.Op Fl M Ar text
+.Op Fl k Ar keyword
+.Ar command
+.Sh DESCRIPTION
+.Nm
+is a module for
+.Xr find-work 1
+that uses
+.Xr pkgcheck 1
+to find work.
+.Pp
+.
+The options for
+.Nm
+are as follows:
+.Bl -tag -width Ds
+.It Fl M Ar text , Fl -message Ar text
+Message of the pkgcheck warning, e.g.
+.Qq uses deprecated EAPI 5 .
+.
+.It Fl k Ar keyword , Fl -keywords Ar keyword
+Comma-separated list of pkgcheck keywords, e.g. DeprecatedEapi.
+.
+.It Fl r Ar repo , Fl -repo Ar repo
+Repository name or absolute path.
+This option is required.
+.
+.El
+.Pp
+.
+.Ar command
+can be one of the following:
+.Bl -tag -width Ds -offset indent
+.It Ic scan Pq alias: Ic s
+Scan a repository for QA issues.
+Results with scopes outside of package level are ignored.
+.
+.El
+.Sh EXIT STATUS
+.Ex -std
+.Sh EXAMPLES
+Find installed GURU packages with
+.Ev PYTHON_COMPAT
+updates available:
+.Pp
+.Dl "$ find-work -I pkgcheck -r guru -k PythonCompatUpdate scan"
+.Sh AUTHORS
+.An -nosplit
+The
+.Nm find-work
+utility was written by
+.An Anna Aq Mt cyber@sysrq.in .
