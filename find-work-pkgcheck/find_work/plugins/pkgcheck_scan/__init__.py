@@ -6,6 +6,8 @@
 Personal advice utility for Gentoo package maintainers: pkgcheck plugin
 """
 
+import logging
+
 import click
 from click_aliases import ClickAliasedGroup
 
@@ -25,6 +27,10 @@ def attach_base_command(group: ClickAliasedGroup) -> None:
 def setup_base_command(options: MainOptions) -> None:
     if "pkgcheck" not in options.children:
         options.children["pkgcheck"] = PkgcheckOptions()
+
+    # silence pkgcore
+    pkgcore_logger = logging.getLogger("pkgcore")
+    pkgcore_logger.setLevel(logging.CRITICAL)
 
 
 @hook_impl
