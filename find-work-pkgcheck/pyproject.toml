@@ -22,7 +22,6 @@ dependencies = [
     "gentoopm<2",
     "pkgcheck",
     "pydantic<3,>=2",
-    "pydantic-core<3,>=2",
     "sortedcontainers",
 ]
 classifiers = [
