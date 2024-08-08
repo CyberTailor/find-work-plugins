@@ -39,6 +39,7 @@ keywords = ["gentoo", "ebuild", "repository", "maintainer", "repology"]
 
 [project.optional-dependencies]
 test = [
+    "pkgcore",
     "pytest",
     "pytest-import-check",
 ]
