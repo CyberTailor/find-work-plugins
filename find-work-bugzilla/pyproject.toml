@@ -7,7 +7,7 @@ build-backend = "flit_core.buildapi"
 
 [project]
 name = "find-work-bugzilla"
-version = "0.1.0"
+version = "0.2.0"
 authors = [
     {name = "Anna", email = "cyber@sysrq.in"},
 ]
@@ -18,7 +18,7 @@ requires-python = ">=3.11"
 dependencies = [
     "click",
     "click-aliases",
-    "find-work>=0.90",
+    "find-work>=0.91",
     "gentoopm<2",
     "pydantic<3,>=2",
     "pydantic-core<3,>=2",
@@ -44,7 +44,7 @@ test = [
     "pytest-import-check",
 ]
 
-[project.entry-points.find-work]
+[project.entry-points."find_work.plugins"]
 bugzilla = "find_work.plugins.gentoo_bugzilla"
 
 [project.urls]
