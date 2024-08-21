@@ -9,7 +9,6 @@ Implementation of CLI commands for the Repology plugin.
 import asyncio
 
 import click
-import repology_client.exceptions
 from click_aliases import ClickAliasedGroup
 from pydantic import TypeAdapter, validate_call
 
@@ -22,11 +21,6 @@ from find_work.cli.options import MainOptions
 from find_work.cli.widgets import ProgressDots
 from find_work.types import VersionPart
 
-from find_work.plugins.repology.internal import (
-    ProjectsMapping,
-    collect_version_bumps,
-    fetch_outdated,
-)
 from find_work.plugins.repology.options import (
     OutdatedCmdOptions,
     RepologyOptions,
@@ -35,6 +29,13 @@ from find_work.plugins.repology.options import (
 
 @validate_call
 async def _outdated(options: MainOptions) -> None:
+    import repology_client.exceptions
+    from find_work.plugins.repology.internal import (
+        ProjectsMapping,
+        collect_version_bumps,
+        fetch_outdated,
+    )
+
     plugin_options = RepologyOptions.model_validate(
         options.children["repology"]
     )

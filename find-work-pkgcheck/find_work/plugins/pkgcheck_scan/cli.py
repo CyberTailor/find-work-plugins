@@ -15,7 +15,6 @@ from find_work.cli.messages import Result
 from find_work.cli.options import MainOptions
 from find_work.cli.widgets import ProgressDots
 
-from find_work.plugins.pkgcheck_scan.internal import do_pkgcheck_scan
 from find_work.plugins.pkgcheck_scan.options import PkgcheckOptions
 
 
@@ -46,6 +45,8 @@ def pkgcheck(options: MainOptions, message: str | None, keywords: str | None,
 @pkgcheck.command(aliases=["s"])
 @click.pass_obj
 def scan(options: MainOptions, **kwargs: Any) -> None:
+    from find_work.plugins.pkgcheck_scan.internal import do_pkgcheck_scan
+
     dots = ProgressDots(options.verbose)
 
     with dots("Scouring the neighborhood"):

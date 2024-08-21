@@ -11,7 +11,6 @@ from typing import Any
 import click
 from click_aliases import ClickAliasedGroup
 from pydantic import validate_call
-from tabulate import tabulate
 
 from find_work.cache import (
     read_raw_json_cache,
@@ -21,17 +20,19 @@ from find_work.cli.messages import Status, Result
 from find_work.cli.options import MainOptions
 from find_work.cli.widgets import ProgressDots
 
-from find_work.plugins.gentoo_bugzilla.internal import (
-    bugs_from_raw_json,
-    bugs_to_raw_json,
-    collect_bugs,
-    fetch_bugs,
-)
 from find_work.plugins.gentoo_bugzilla.options import BugzillaOptions
 
 
 @validate_call
 def _list_bugs(options: MainOptions, **filters: Any) -> None:
+    from tabulate import tabulate
+    from find_work.plugins.gentoo_bugzilla.internal import (
+        bugs_from_raw_json,
+        bugs_to_raw_json,
+        collect_bugs,
+        fetch_bugs,
+    )
+
     dots = ProgressDots(options.verbose)
 
     with dots(Status.CACHE_READ):
