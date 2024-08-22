@@ -7,7 +7,7 @@ build-backend = "flit_core.buildapi"
 
 [project]
 name = "find-work-repology"
-version = "0.2.0"
+version = "0.2.1"
 authors = [
     {name = "Anna", email = "cyber@sysrq.in"},
 ]
@@ -57,6 +57,7 @@ name = "find_work.plugins.repology"
 
 [tool.flit.sdist]
 include = [
+    "ChangeLog",
     "man/",
     "tests/",
 ]
