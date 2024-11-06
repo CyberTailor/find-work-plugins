@@ -72,6 +72,8 @@ def bugzilla(options: MainOptions, component: str | None = None,
              time: bool = False, *, indirect_call: bool = False) -> None:
     """
     Use Bugzilla to find work.
+
+    See `man find-work-bugzilla` for the full help.
     """
 
     options.breadcrumbs.feed("bugzilla")

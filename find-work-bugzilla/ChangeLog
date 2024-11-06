@@ -1,5 +1,7 @@
 2024-11-06  Anna  <cyber@sysrq.in>
 
+	* cli.py(bugzilla): add a little message mentioning there's a man page
+
 	* internal.py(collect_bugs): catch invalid extracted atom strings
 
 2024-08-22  Anna  <cyber@sysrq.in>

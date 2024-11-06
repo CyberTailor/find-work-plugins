@@ -85,6 +85,8 @@ def repology(options: MainOptions, repo: str = "", *,
              indirect_call: bool = False) -> None:
     """
     Use Repology to find work.
+
+    See `man find-work-repology` for the full help.
     """
 
     options.breadcrumbs.feed("repology")

@@ -30,6 +30,8 @@ def pkgcheck(options: MainOptions, message: str | None, keywords: str | None,
              repo: str, *, indirect_call: bool = False) -> None:
     """
     Use pkgcheck to find work.
+
+    See `man find-work-pkgcheck` for the full help.
     """
 
     plugin_options = PkgcheckOptions.model_validate(
