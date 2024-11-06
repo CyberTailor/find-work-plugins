@@ -7,7 +7,7 @@ build-backend = "flit_core.buildapi"
 
 [project]
 name = "find-work-bugzilla"
-version = "0.2.1"
+version = "0.2.2"
 authors = [
     {name = "Anna", email = "cyber@sysrq.in"},
 ]
