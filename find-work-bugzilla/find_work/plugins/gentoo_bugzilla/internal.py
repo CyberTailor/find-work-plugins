@@ -6,6 +6,7 @@
 Internal functions that don't depend on any CLI functionality.
 """
 
+import logging
 import warnings
 from collections.abc import Collection
 from datetime import datetime
@@ -30,6 +31,8 @@ with warnings.catch_warnings():
     warnings.simplefilter("ignore")
     import bugzilla
     from bugzilla.bug import Bug
+
+logger = logging.getLogger("find_work.plugins.bugzilla")
 
 
 @validate_call
@@ -78,7 +81,15 @@ def collect_bugs(data: Collection[Bug], options: MainOptions) -> list[BugView]:
         if options.only_installed:
             if (package := extract_package_name(bug.summary)) is None:
                 continue
-            if package not in pm.installed:
+
+            is_installed = False
+            try:
+                is_installed = package in pm.installed
+            except gentoopm.exceptions.InvalidAtomStringError:
+                logger.warning("Invalid atom parsed: '%s', please report a bug",
+                               package)
+
+            if not is_installed:
                 continue
 
         date = datetime.fromisoformat(bug.last_change_time).date().isoformat()
