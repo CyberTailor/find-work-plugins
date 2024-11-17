@@ -12,7 +12,7 @@ from gentoopm.basepm.repo import PMRepository
 from pydantic import validate_call
 from sortedcontainers import SortedDict, SortedSet
 
-from find_work.cli.options import MainOptions
+from find_work.core.cli.options import MainOptions
 
 from find_work.plugins.pkgcheck_scan.options import PkgcheckOptions
 

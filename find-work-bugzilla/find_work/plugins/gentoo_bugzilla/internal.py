@@ -16,9 +16,9 @@ import gentoopm
 import pydantic_core
 from pydantic import validate_call
 
-from find_work.cli.options import MainOptions
-from find_work.types import BugView
-from find_work.utils import (
+from find_work.core.cli.options import MainOptions
+from find_work.core.types.results import BugView
+from find_work.core.utils import (
     extract_package_name,
     requests_session,
 )

@@ -16,9 +16,9 @@ from pydantic import validate_call
 from repology_client.types import Package
 from sortedcontainers import SortedSet
 
-from find_work.cli.options import MainOptions
-from find_work.types import VersionBump
-from find_work.utils import aiohttp_session
+from find_work.core.cli.options import MainOptions
+from find_work.core.types.results import VersionBump
+from find_work.core.utils import aiohttp_session
 
 from find_work.plugins.repology.options import RepologyOptions
 

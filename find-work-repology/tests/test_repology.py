@@ -5,8 +5,8 @@
 from sortedcontainers import SortedSet
 from repology_client.types import Package
 
-from find_work.types import VersionBump
-from find_work.cli.options import MainOptions
+from find_work.core.cli.options import MainOptions
+from find_work.core.types.results import VersionBump
 from find_work.plugins.repology.internal import collect_version_bumps
 from find_work.plugins.repology.options import RepologyOptions
 

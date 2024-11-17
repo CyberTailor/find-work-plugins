@@ -10,7 +10,7 @@ from collections.abc import Sequence
 
 from pydantic import Field
 
-from find_work.cli.options import OptionsBase
+from find_work.core.cli.options import OptionsBase
 
 
 class PkgcheckOptions(OptionsBase):

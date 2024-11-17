@@ -12,13 +12,13 @@ import click
 from click_aliases import ClickAliasedGroup
 from pydantic import validate_call
 
-from find_work.cache import (
+from find_work.core.cache import (
     read_raw_json_cache,
     write_raw_json_cache,
 )
-from find_work.cli.messages import Status, Result
-from find_work.cli.options import MainOptions
-from find_work.cli.widgets import ProgressDots
+from find_work.core.cli.messages import Status, Result
+from find_work.core.cli.options import MainOptions
+from find_work.core.cli.widgets import ProgressDots
 
 from find_work.plugins.gentoo_bugzilla.options import BugzillaOptions
 

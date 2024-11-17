@@ -11,9 +11,9 @@ from typing import Any
 import click
 from click_aliases import ClickAliasedGroup
 
-from find_work.cli.messages import Result
-from find_work.cli.options import MainOptions
-from find_work.cli.widgets import ProgressDots
+from find_work.core.cli.messages import Result
+from find_work.core.cli.options import MainOptions
+from find_work.core.cli.widgets import ProgressDots
 
 from find_work.plugins.pkgcheck_scan.options import PkgcheckOptions
 

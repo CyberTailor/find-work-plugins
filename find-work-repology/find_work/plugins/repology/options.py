@@ -8,8 +8,8 @@ Repology subcommand options.
 
 from collections.abc import Sequence
 
-from find_work.cli.options import OptionsBase
-from find_work.types import VersionPart
+from find_work.core.cli.options import OptionsBase
+from find_work.core.types import VersionPart
 
 
 class OutdatedCmdOptions(OptionsBase):

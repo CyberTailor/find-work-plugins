@@ -8,7 +8,7 @@ Bugzilla subcommand options.
 
 from collections.abc import Sequence
 
-from find_work.cli.options import OptionsBase
+from find_work.core.cli.options import OptionsBase
 
 
 class BugzillaOptions(OptionsBase):
