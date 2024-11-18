@@ -1,0 +1,17 @@
+# SPDX-License-Identifier: CC0-1.0
+# SPDX-FileCopyrightText: 2023-2024 Anna <cyber@sysrq.in>
+
+requires = ["tox>=4.21"]
+min_version = "4.21"
+env_list = ["lint"]
+
+[env.lint]
+description = "run the linters"
+ignore_errors = true
+skip_install = true
+deps = [
+    "reuse",
+]
+commands = [
+    ["reuse", "lint"],
+]
