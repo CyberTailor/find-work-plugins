@@ -1,3 +1,9 @@
+2024-11-18  Anna  <cyber@sysrq.in>
+
+	* Update to new find-work namespacing
+
+	* cli.py: support result reporters
+
 2024-11-06  Anna  <cyber@sysrq.in>
 
 	* 0.2.2 release

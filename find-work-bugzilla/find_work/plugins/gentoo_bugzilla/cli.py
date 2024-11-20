@@ -19,13 +19,13 @@ from find_work.core.cache import (
 from find_work.core.cli.messages import Status, Result
 from find_work.core.cli.options import MainOptions
 from find_work.core.cli.widgets import ProgressDots
+from find_work.core.types.results import BugView
 
 from find_work.plugins.gentoo_bugzilla.options import BugzillaOptions
 
 
 @validate_call
 def _list_bugs(options: MainOptions, **filters: Any) -> None:
-    from tabulate import tabulate
     from find_work.plugins.gentoo_bugzilla.internal import (
         bugs_from_raw_json,
         bugs_to_raw_json,
@@ -49,11 +49,14 @@ def _list_bugs(options: MainOptions, **filters: Any) -> None:
             raw_json = bugs_to_raw_json(data)
             write_raw_json_cache(raw_json, options.breadcrumbs)
 
-    bumps = collect_bugs(data, options)
-    if len(bumps) == 0:
-        return options.exit(Result.NO_WORK)
+    no_work = True
+    with options.get_reporter_for(BugView) as reporter:
+        for bug in collect_bugs(data, options):
+            reporter.add_result(bug)
+            no_work = False
 
-    options.echo(tabulate(bumps, tablefmt="plain"))  # type: ignore
+    if no_work:
+        return options.exit(Result.NO_WORK)
     return None
 
 

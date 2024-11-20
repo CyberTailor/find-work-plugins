@@ -18,12 +18,11 @@ requires-python = ">=3.11"
 dependencies = [
     "click",
     "click-aliases",
-    "find-work>=0.91",
+    "find-work[tabulate]>=0.990",
     "gentoopm<2",
     "pydantic<3,>=2",
     "pydantic-core<3,>=2",
     "python-bugzilla",
-    "tabulate",
 ]
 classifiers = [
     "Development Status :: 4 - Beta",
@@ -51,6 +50,7 @@ bugzilla = "find_work.plugins.gentoo_bugzilla"
 Home = "https://find-work.sysrq.in/"
 Source = "https://git.sysrq.in/find-work-plugins"
 Issues = "https://bugs.sysrq.in/enter_bug.cgi?product=Software&component=find-work"
+Changelog = "https://git.sysrq.in/find-work-plugins/plain/find-work-bugzilla/ChangeLog"
 
 [tool.flit.module]
 name = "find_work.plugins.gentoo_bugzilla"
