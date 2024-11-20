@@ -2,7 +2,8 @@
 
 	* Update to new find-work namespacing.
 
-	* cli.py: support result reporters.
+	* cli.py: support result reporters; suppress pkgcheck progress
+	messages by redirecting stderr to nowhere.
 
 	* internal.py(do_pkgcheck_scan): return results as dataclasses instead
 	of raw pkgcheck objects.

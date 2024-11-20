@@ -6,6 +6,8 @@
 Implementation of CLI commands for the pkgcheck plugin.
 """
 
+from contextlib import redirect_stdout
+from io import StringIO
 from typing import Any
 
 import click
@@ -53,7 +55,10 @@ def scan(options: MainOptions, **kwargs: Any) -> None:
     dots = ProgressDots(options.verbose)
 
     with dots("Scouring the neighborhood"):
-        data = do_pkgcheck_scan(options)
+        # this works because pkgcheck.base.ProgressManager checks
+        # that sys.stdout is a TTY
+        with redirect_stdout(StringIO()):
+            data = do_pkgcheck_scan(options)
 
     no_work = True
     with options.get_reporter_for(PkgcheckResultsGroup) as reporter:
