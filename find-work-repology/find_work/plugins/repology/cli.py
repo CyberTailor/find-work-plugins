@@ -20,6 +20,7 @@ from find_work.core.cli.messages import Status, Result
 from find_work.core.cli.options import MainOptions
 from find_work.core.cli.widgets import ProgressDots
 from find_work.core.types import VersionPart
+from find_work.core.types.results import VersionBump
 
 from find_work.plugins.repology.options import (
     OutdatedCmdOptions,
@@ -62,16 +63,14 @@ async def _outdated(options: MainOptions) -> None:
             write_raw_json_cache(raw_json, options.breadcrumbs)
 
     no_work = True
-    for bump in collect_version_bumps(data.values(), options):
-        if (
-            cmd_options.version_part is None
-            or bump.changed(cmd_options.version_part)
-        ):
-            options.echo(bump.atom + " ", nl=False)
-            options.secho(bump.old_version, fg="red", nl=False)
-            options.echo(" → ", nl=False)
-            options.secho(bump.new_version, fg="green")
-            no_work = False
+    with options.get_reporter_for(VersionBump) as reporter:
+        for bump in collect_version_bumps(data.values(), options):
+            if (
+                cmd_options.version_part is None
+                or bump.changed(cmd_options.version_part)
+            ):
+                reporter.add_result(bump)
+                no_work = False
 
     if no_work:
         return options.exit(Result.NO_WORK)

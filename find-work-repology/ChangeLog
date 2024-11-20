@@ -1,3 +1,9 @@
+2024-11-20  Anna  <cyber@sysrq.in>
+
+	* Update to new find-work namespacing
+
+	* cli.py: support result reporters
+
 2024-11-06  Anna  <cyber@sysrq.in>
 
 	* cli.py(repology): add a little message mentioning there's a man page
