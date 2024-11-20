@@ -10,7 +10,7 @@ workspace:
 
 steps:
   - name: test
-    image: 31z4/tox:4
+    image: 31z4/tox:4-5
     user: root
     commands:
       - tox run
