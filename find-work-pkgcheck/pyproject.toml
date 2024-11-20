@@ -83,3 +83,38 @@ module = [
     "pkgcheck",
 ]
 ignore_missing_imports = true
+
+[tool.tox]
+requires = ["tox>=4.21"]
+min_version = "4.21"
+env_list = ["3.11", "3.12", "3.13", "lint"]
+
+[tool.tox.env_run_base]
+description = "run the tests + mypy under {base_python}"
+ignore_errors = true
+deps = [
+    "mypy",
+    "sortedcontainers-stubs",
+]
+extras = [
+    "test",
+]
+commands = [
+    ["pytest", "-vv", "{tty:--color=yes}", "{posargs:find_work}"],
+    ["mypy", "--explicit-package-bases", "{posargs:find_work}"],
+]
+
+[tool.tox.env.lint]
+description = "run the linters"
+ignore_errors = true
+skip_install = true
+deps = [
+    "bandit",
+    "pycodestyle",
+    "pyflakes",
+]
+commands = [
+    ["pyflakes", "{posargs:find_work}"],
+    ["pycodestyle", "{posargs:find_work}"],
+    ["bandit", "-r", "{posargs:find_work}"],
+]
