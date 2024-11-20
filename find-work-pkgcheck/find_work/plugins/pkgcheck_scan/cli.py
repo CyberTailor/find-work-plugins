@@ -14,6 +14,7 @@ from click_aliases import ClickAliasedGroup
 from find_work.core.cli.messages import Result
 from find_work.core.cli.options import MainOptions
 from find_work.core.cli.widgets import ProgressDots
+from find_work.core.types.results import PkgcheckResultsGroup
 
 from find_work.plugins.pkgcheck_scan.options import PkgcheckOptions
 
@@ -54,16 +55,14 @@ def scan(options: MainOptions, **kwargs: Any) -> None:
     with dots("Scouring the neighborhood"):
         data = do_pkgcheck_scan(options)
 
-    if len(data) == 0:
+    no_work = True
+    with options.get_reporter_for(PkgcheckResultsGroup) as reporter:
+        for package, results in data.items():
+            reporter.add_result(
+                PkgcheckResultsGroup(atom=package, results=results)
+            )
+            no_work = False
+
+    if no_work:
         return options.exit(Result.NO_WORK)
-
-    for package, results in data.items():
-        options.echo()
-        options.secho(package, fg="cyan", bold=True)
-        for item in results:
-            options.echo("\t", nl=False)
-            options.secho(item.name, fg=item.color, nl=False)
-            options.echo(": ", nl=False)
-            options.echo(item.desc)
-
     return None

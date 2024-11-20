@@ -1,3 +1,12 @@
+2024-11-20  Anna  <cyber@sysrq.in>
+
+	* Update to new find-work namespacing.
+
+	* cli.py: support result reporters.
+
+	* internal.py(do_pkgcheck_scan): return results as dataclasses instead
+	of raw pkgcheck objects.
+
 2024-11-06  Anna  <cyber@sysrq.in>
 
 	* cli.py(pkgcheck): add a little message mentioning there's a man page
