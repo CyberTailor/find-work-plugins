@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: CC0-1.0
-# SPDX-FileCopyrightText: 2024 Anna <cyber@sysrq.in>
+# SPDX-FileCopyrightText: 2024-2025 Anna <cyber@sysrq.in>
 
 [build-system]
 requires = ["flit_core >=3.2,<4"]
@@ -37,10 +37,18 @@ classifiers = [
 ]
 keywords = ["gentoo", "ebuild", "repository", "maintainer"]
 
-[project.optional-dependencies]
+[dependency-groups]
 test = [
     "pytest",
     "pytest-import-check",
+]
+typecheck = [
+    "mypy",
+]
+lint = [
+    "bandit",
+    "pycodestyle",
+    "pyflakes",
 ]
 
 [project.entry-points."find_work.plugins.v1"]
@@ -69,18 +77,15 @@ disallow_untyped_defs = true
 no_implicit_optional = true
 
 [tool.tox]
-requires = ["tox>=4.21"]
-min_version = "4.21"
+requires = ["tox>=4.22"]
 env_list = ["3.11", "3.12", "3.13", "lint"]
 
 [tool.tox.env_run_base]
 description = "run the tests + mypy under {base_python}"
 ignore_errors = true
-deps = [
-    "mypy",
-]
-extras = [
+dependency_groups = [
     "test",
+    "typecheck",
 ]
 commands = [
     ["pytest", "-vv", "{tty:--color=yes}", "find_work"],
@@ -91,11 +96,7 @@ commands = [
 description = "run the linters"
 ignore_errors = true
 skip_install = true
-deps = [
-    "bandit",
-    "pycodestyle",
-    "pyflakes",
-]
+dependency_groups = ["lint"]
 commands = [
     ["pyflakes", "find_work"],
     ["pycodestyle", "find_work"],
