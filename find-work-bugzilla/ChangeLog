@@ -2,6 +2,8 @@
 
 	* internal.py (fetch_bugs): support find-work's category filter.
 
+	* internal.py (collect_bugs): change to a generator function.
+
 2024-11-18  Anna  <cyber@sysrq.in>
 
 	* 0.3.0 release

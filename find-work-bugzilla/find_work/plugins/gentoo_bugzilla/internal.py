@@ -8,7 +8,7 @@ Internal functions that don't depend on any CLI functionality.
 
 import logging
 import warnings
-from collections.abc import Collection
+from collections.abc import Collection, Iterator
 from datetime import datetime
 from typing import Any
 
@@ -75,11 +75,10 @@ def fetch_bugs(options: MainOptions, **kwargs: Any) -> list[Bug]:
         return bz.query(query)
 
 
-def collect_bugs(data: Collection[Bug], options: MainOptions) -> list[BugView]:
+def collect_bugs(data: Collection[Bug], options: MainOptions) -> Iterator[BugView]:
     if options.only_installed:
         pm = gentoopm.get_package_manager()
 
-    result: list[BugView] = []
     for bug in data:
         if options.only_installed:
             if (package := extract_package_name(bug.summary)) is None:
@@ -87,10 +86,12 @@ def collect_bugs(data: Collection[Bug], options: MainOptions) -> list[BugView]:
 
             is_installed = False
             try:
-                is_installed = package in pm.installed
+                atom = pm.Atom(package)
             except gentoopm.exceptions.InvalidAtomStringError:
                 logger.warning("Invalid atom parsed: '%s', please report a bug",
                                package)
+            else:
+                is_installed = atom in pm.installed
 
             if not is_installed:
                 continue
@@ -98,6 +99,4 @@ def collect_bugs(data: Collection[Bug], options: MainOptions) -> list[BugView]:
         # Strip ISO 8601 datetime strings from everything except date.
         date = datetime.fromisoformat(bug.last_change_time).date().isoformat()
 
-        item = BugView(bug.id, date, bug.assigned_to, bug.summary)
-        result.append(item)
-    return result
+        yield BugView(bug.id, date, bug.assigned_to, bug.summary)
