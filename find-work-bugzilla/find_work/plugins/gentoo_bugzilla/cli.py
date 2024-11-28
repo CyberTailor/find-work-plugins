@@ -44,6 +44,7 @@ def _list_bugs(options: MainOptions, **filters: Any) -> None:
         with dots("Fetching data from Bugzilla API"):
             data = fetch_bugs(options, **filters)
         if len(data) == 0:
+            # exit before writing empty cache
             return options.exit(Result.EMPTY_RESPONSE)
         with dots(Status.CACHE_WRITE):
             raw_json = bugs_to_raw_json(data)
@@ -60,7 +61,8 @@ def _list_bugs(options: MainOptions, **filters: Any) -> None:
     return None
 
 
-@click.group(cls=ClickAliasedGroup)
+@click.group(cls=ClickAliasedGroup,
+             epilog="See `man find-work-bugzilla` for the full help.")
 @click.option("-Q", "--query",
               help="Search terms.")
 @click.option("-c", "--component", metavar="NAME",
@@ -75,8 +77,6 @@ def bugzilla(options: MainOptions, component: str | None = None,
              time: bool = False, *, indirect_call: bool = False) -> None:
     """
     Use Bugzilla to find work.
-
-    See `man find-work-bugzilla` for the full help.
     """
 
     options.breadcrumbs.feed("bugzilla")

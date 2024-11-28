@@ -1,5 +1,7 @@
 2024-11-29  Anna  <cyber@sysrq.in>
 
+	* cli.py (bugzilla): move the man page mention to epilog.
+
 	* internal.py (fetch_bugs): support find-work's category filter.
 
 	* internal.py (collect_bugs): change to a generator function.
