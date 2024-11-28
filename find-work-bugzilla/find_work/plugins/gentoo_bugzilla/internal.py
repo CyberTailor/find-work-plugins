@@ -55,11 +55,14 @@ def fetch_bugs(options: MainOptions, **kwargs: Any) -> list[Bug]:
         options.children["bugzilla"]
     )
 
+    short_desc = " ".join(
+        filter(None, [options.category, plugin_options.short_desc])
+    )
     with requests_session() as session:
         bz = bugzilla.Bugzilla(BUGZILLA_URL, requests_session=session,
                                force_rest=True)
         query = bz.build_query(
-            short_desc=plugin_options.short_desc or None,
+            short_desc=short_desc or None,
             product=plugin_options.product or None,
             component=plugin_options.component or None,
             assigned_to=options.maintainer or None,
@@ -92,7 +95,9 @@ def collect_bugs(data: Collection[Bug], options: MainOptions) -> list[BugView]:
             if not is_installed:
                 continue
 
+        # Strip ISO 8601 datetime strings from everything except date.
         date = datetime.fromisoformat(bug.last_change_time).date().isoformat()
+
         item = BugView(bug.id, date, bug.assigned_to, bug.summary)
         result.append(item)
     return result

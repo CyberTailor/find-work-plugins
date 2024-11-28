@@ -1,3 +1,7 @@
+2024-11-29  Anna  <cyber@sysrq.in>
+
+	* internal.py (fetch_bugs): support find-work's category filter.
+
 2024-11-18  Anna  <cyber@sysrq.in>
 
 	* 0.3.0 release
