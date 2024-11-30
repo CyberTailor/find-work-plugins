@@ -102,8 +102,8 @@ extras = [
     "test",
 ]
 commands = [
-    ["pytest", "-vv", "{tty:--color=yes}", "{posargs:find_work}"],
-    ["mypy", "--explicit-package-bases", "{posargs:find_work}"],
+    ["pytest", "-vv", "{tty:--color=yes}", "find_work", "tests"],
+    ["mypy", "--explicit-package-bases", "find_work", "tests"],
 ]
 
 [tool.tox.env.lint]
@@ -116,7 +116,7 @@ deps = [
     "pyflakes",
 ]
 commands = [
-    ["pyflakes", "{posargs:find_work}"],
-    ["pycodestyle", "{posargs:find_work}"],
-    ["bandit", "-r", "{posargs:find_work}"],
+    ["pyflakes", "find_work", "tests"],
+    ["pycodestyle", "find_work", "tests"],
+    ["bandit", "-r", "find_work"],
 ]
