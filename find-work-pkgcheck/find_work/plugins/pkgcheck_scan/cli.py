@@ -21,7 +21,8 @@ from find_work.core.types.results import PkgcheckResultsGroup
 from find_work.plugins.pkgcheck_scan.options import PkgcheckOptions
 
 
-@click.group(cls=ClickAliasedGroup)
+@click.group(cls=ClickAliasedGroup,
+             epilog="See `man find-work-pkgcheck` for the full help.")
 @click.option("-M", "--message", metavar="LIST",
               help="Warning message to search for.")
 @click.option("-k", "--keywords", metavar="LIST",
@@ -33,8 +34,6 @@ def pkgcheck(options: MainOptions, message: str | None, keywords: str | None,
              repo: str, *, indirect_call: bool = False) -> None:
     """
     Use pkgcheck to find work.
-
-    See `man find-work-pkgcheck` for the full help.
     """
 
     plugin_options = PkgcheckOptions.model_validate(
