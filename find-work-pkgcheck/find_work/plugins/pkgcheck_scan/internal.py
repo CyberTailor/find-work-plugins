@@ -61,8 +61,8 @@ def do_pkgcheck_scan(options: MainOptions) -> SortedDict[
         options.children["pkgcheck"]
     )
 
-    need_repo_obj = bool(options.maintainer)
-    need_pm = need_repo_obj or options.only_installed
+    need_repo_obj = bool(options.category or options.maintainer)
+    need_pm = bool(need_repo_obj or options.only_installed)
 
     pm: PkgcorePM
     repo: UnconfiguredTree
@@ -75,13 +75,16 @@ def do_pkgcheck_scan(options: MainOptions) -> SortedDict[
                 else pm.repo_from_name(plugin_options.repo)
             )
 
-    cli_opts = [
+    cli_opts: list[str] = [
         "--repo", plugin_options.repo,
         "--scope", "pkg,ver",
         "--filter", "latest",  # TODO: become version-aware
     ]
     if plugin_options.keywords:
         cli_opts += ["--keywords", ",".join(plugin_options.keywords)]
+    if options.category:
+        category_path = Path(repo.location) / options.category
+        cli_opts.append(str(category_path))
 
     data: SortedDict[str, SortedSet[PkgcheckResult]] = SortedDict()
     for result in pkgcheck.scan(cli_opts):
@@ -89,7 +92,7 @@ def do_pkgcheck_scan(options: MainOptions) -> SortedDict[
             if plugin_options.message not in result.desc:
                 continue
 
-        package = "/".join([result.category, result.package])
+        package: str = "/".join([result.category, result.package])
         pkg_atom: atom
         if need_pm:
             pkg_atom = atom(package).unversioned_atom

@@ -9,6 +9,8 @@
 	maintainer-needed@gentoo.org, match packages without maintainer
 	(aka "orphaned").
 
+	* internal.py (do_pkgcheck_scan): support find-work's category filter.
+
 2024-11-20  Anna  <cyber@sysrq.in>
 
 	* 0.3.0 release
