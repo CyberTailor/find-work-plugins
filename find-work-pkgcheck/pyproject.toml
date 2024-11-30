@@ -19,8 +19,8 @@ dependencies = [
     "click",
     "click-aliases",
     "find-work>=0.990",
-    "gentoopm<2",
     "pkgcheck",
+    "pkgcore",
     "pydantic<3,>=2",
     "sortedcontainers",
 ]
@@ -79,9 +79,9 @@ check_untyped_defs = true
 [[tool.mypy.overrides]]
 module = [
     "click_aliases",
-    "gentoopm",
-    "gentoopm.*",
     "pkgcheck",
+    "pkgcore",
+    "pkgcore.*",
 ]
 ignore_missing_imports = true
 

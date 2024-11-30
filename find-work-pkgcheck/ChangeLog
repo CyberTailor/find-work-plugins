@@ -1,3 +1,12 @@
+2024-11-30  Anna  <cyber@sysrq.in>
+
+	* internal.py: use pkgcore directly instead of relying on gentoopm,
+	this allows to initialize repos by path.
+
+	* internal.py (do_pkgcheck_scan): if maintainer email is
+	maintainer-needed@gentoo.org, match packages without maintainer
+	(aka "orphaned").
+
 2024-11-20  Anna  <cyber@sysrq.in>
 
 	* 0.3.0 release
