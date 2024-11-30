@@ -76,7 +76,8 @@ async def _outdated(options: MainOptions) -> None:
         return options.exit(Result.NO_WORK)
 
 
-@click.group(cls=ClickAliasedGroup)
+@click.group(cls=ClickAliasedGroup,
+             epilog="See `man find-work-repology` for the full help.")
 @click.option("-r", "--repo", metavar="NAME", required=True,
               help="Repository name on Repology.")
 @click.pass_obj
@@ -84,8 +85,6 @@ def repology(options: MainOptions, repo: str = "", *,
              indirect_call: bool = False) -> None:
     """
     Use Repology to find work.
-
-    See `man find-work-repology` for the full help.
     """
 
     options.breadcrumbs.feed("repology")
