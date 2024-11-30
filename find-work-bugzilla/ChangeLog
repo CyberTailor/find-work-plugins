@@ -1,3 +1,7 @@
+2024-11-30  Anna  <cyber@sysrq.in>
+
+	* 1.0.0 release
+
 2024-11-29  Anna  <cyber@sysrq.in>
 
 	* cli.py (bugzilla): move the man page mention to epilog.
