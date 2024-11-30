@@ -10,29 +10,31 @@
 
 	* 0.3.0 release
 
-	* Update to new find-work namespacing
+	* update find-work-bugzilla to the new find-work namespacing
 
-	* cli.py: support result reporters
+	* cli.py: support result reporters.
 
 2024-11-06  Anna  <cyber@sysrq.in>
 
 	* 0.2.2 release
 
-	* cli.py(bugzilla): add a little message mentioning there's a man page
+	* cli.py (bugzilla): add a little message mentioning there's a man
+	page.
 
-	* internal.py(collect_bugs): catch invalid extracted atom strings
+	* internal.py (collect_bugs): catch invalid extracted atom strings.
 
 2024-08-22  Anna  <cyber@sysrq.in>
 
 	* 0.2.1 release
 
-	* cli.py: defer time-consuming imports (reduces startup time by ~0,4s)
+	* cli.py: defer time-consuming imports (reduces startup time by
+	~0,4s).
 
 2024-08-09  Anna  <cyber@sysrq.in>
 
 	* 0.2.0 release
 
-	* pyproject.toml: fix incorrect entry point name
+	* pyproject.toml: fix incorrect entry point name.
 
 2024-08-09  Anna  <cyber@sysrq.in>
 
