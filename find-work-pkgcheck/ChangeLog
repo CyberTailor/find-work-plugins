@@ -1,5 +1,7 @@
 2024-11-30  Anna  <cyber@sysrq.in>
 
+	* 1.0.0 release
+
 	* cli.py (pkgcheck): move the man page mention to epilog.
 
 	* internal.py: use pkgcore directly instead of relying on gentoopm,
