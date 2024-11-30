@@ -35,6 +35,8 @@ async def fetch_outdated(options: MainOptions) -> ProjectsMapping:
     filters: dict = {}
     if options.maintainer:
         filters["maintainer"] = options.maintainer
+    if options.category:
+        filters["category"] = options.category
 
     async with aiohttp_session() as session:
         return await repology_client.get_projects(inrepo=plugin_options.repo,
