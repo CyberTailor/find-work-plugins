@@ -45,6 +45,7 @@ async def _outdated(options: MainOptions) -> None:
     )
     dots = ProgressDots(options.verbose)
 
+    data: ProjectsMapping
     with dots(Status.CACHE_READ):
         raw_data = read_raw_json_cache(options.breadcrumbs)
     if raw_data:
@@ -58,7 +59,7 @@ async def _outdated(options: MainOptions) -> None:
             return options.exit(Result.EMPTY_RESPONSE)
         with dots(Status.CACHE_WRITE):
             raw_json = TypeAdapter(ProjectsMapping).dump_json(
-                data, exclude_none=True
+                data, exclude_none=True  # type: ignore
             )
             write_raw_json_cache(raw_json, options.breadcrumbs)
 

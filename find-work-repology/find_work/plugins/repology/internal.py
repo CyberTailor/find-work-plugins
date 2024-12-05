@@ -6,7 +6,7 @@
 Internal functions that don't depend on any CLI functionality.
 """
 
-from collections.abc import Collection
+from collections.abc import Collection, Mapping, Set
 
 import gentoopm
 import repology_client
@@ -22,8 +22,8 @@ from find_work.core.utils import aiohttp_session
 
 from find_work.plugins.repology.options import RepologyOptions
 
-PackageSet = set[Package]
-ProjectsMapping = dict[str, PackageSet]
+PackageSet = Set[Package]
+ProjectsMapping = Mapping[str, PackageSet]
 
 
 @validate_call
