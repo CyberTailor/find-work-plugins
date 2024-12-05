@@ -1,16 +1,16 @@
 <!-- SPDX-FileCopyrightText: 2024 Anna <cyber@sysrq.in> -->
 <!-- SPDX-License-Identifier: CC0-1.0 -->
 
-find-work-example
-=================
+find-work-pgo
+=============
 
 [find-work][find-work] is a utility for Gentoo repository maintainers that
 helps them find ebuilds to improve.
 
-This plugin adds commands *that do nothing but just an example of writing a new
-plugin*.
+This plugin adds commands that use [Gentoo Packages][pgo] website to find work.
 
 [find-work]: https://find-work.sysrq.in/
+[pgo]: https://packages.gentoo.org/
 
 
 Installing
@@ -21,12 +21,12 @@ Installing
 ```sh
 eselect repository enable guru
 emaint sync -r guru
-emerge dev-util/find-work-example
+emerge dev-util/find-work-pgo
 ```
 
 ### Other systems
 
-`pip install find-work-example --user`
+`pip install find-work-pgo --user`
 
 
 Packaging
@@ -34,7 +34,7 @@ Packaging
 
 You can track new releases using an [atom feed][atom] provided by PyPI.
 
-[atom]: https://pypi.org/rss/project/find-work-example/releases.xml
+[atom]: https://pypi.org/rss/project/find-work-pgo/releases.xml
 
 
 Contributing

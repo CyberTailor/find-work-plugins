@@ -15,5 +15,6 @@ steps:
     commands:
       - tox run
       - tox -c find-work-bugzilla run
+      - tox -c find-work-pgo run
       - tox -c find-work-pkgcheck run
       - tox -c find-work-repology run

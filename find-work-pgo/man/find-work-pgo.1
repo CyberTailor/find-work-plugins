@@ -1,0 +1,45 @@
+.\" SPDX-FileType: DOCUMENTATION
+.\" SPDX-FileCopyrightText: 2024 Anna <cyber@sysrq.in>
+.\" SPDX-License-Identifier: WTFPL
+.\" No warranty
+.Dd December 2, 2024
+.Dt FIND-WORK-PGO 1
+.Os
+.Sh NAME
+.Nm "find-work pgo"
+.Nd discover ebuilds to improve using Gentoo Packages website
+.Sh SYNOPSIS
+.Nm
+.Ar command
+.Sh DESCRIPTION
+.Nm
+is a module for
+.Xr find-work 1
+that uses Gentoo Packages website to find work.
+.Pp
+.
+.Ar command
+can be one of the following:
+.Bl -tag -width Ds -offset indent
+.It Ic stabilization
+.Dl Pq alias: Ic srq , Ic s
+.Pp
+Fetch stable requests.
+.
+.El
+.Sh EXIT STATUS
+.Ex -std
+.Sh EXAMPLES
+Find stable requests for packages maintained by Larry:
+.Pp
+.Dl "$ find-work -m larry@gentoo.org pgo stabilization"
+.Pp
+Find stable requests for dev-python packages installed on your system:
+.Pp
+.Dl "$ find-work -IC dev-python pgo stabilization"
+.Sh AUTHORS
+.An -nosplit
+The
+.Nm find-work
+utility was written by
+.An Anna Aq Mt cyber@sysrq.in .
