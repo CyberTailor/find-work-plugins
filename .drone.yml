@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: CC0-1.0
-# SPDX-FileCopyrightText: 2024 Anna <cyber@sysrq.in>
+# SPDX-FileCopyrightText: 2024-2025 Anna <cyber@sysrq.in>
 
 kind: pipeline
 type: docker
@@ -10,8 +10,7 @@ workspace:
 
 steps:
   - name: test
-    image: 31z4/tox:4-5
-    user: root
+    image: fedorapython/fedora-python-tox:latest
     commands:
       - tox run
       - tox -c find-work-bugzilla run
