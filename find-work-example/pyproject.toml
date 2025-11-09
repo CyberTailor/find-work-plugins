@@ -78,7 +78,6 @@ no_implicit_optional = true
 
 [tool.tox]
 requires = ["tox>=4.22"]
-min_version = "4.22"
 env_list = ["3.11", "3.12", "3.13", "lint"]
 
 [tool.tox.env_run_base]
