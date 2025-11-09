@@ -5,9 +5,6 @@ kind: pipeline
 type: docker
 name: default
 
-workspace:
-  path: /tests
-
 steps:
   - name: test
     image: fedorapython/fedora-python-tox:latest
