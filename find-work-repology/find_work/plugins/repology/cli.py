@@ -58,9 +58,8 @@ async def _outdated(options: MainOptions) -> None:
         except repology_client.exceptions.EmptyResponse:
             return options.exit(Result.EMPTY_RESPONSE)
         with dots(Status.CACHE_WRITE):
-            raw_json = TypeAdapter(ProjectsMapping).dump_json(
-                data, exclude_none=True  # type: ignore
-            )
+            adapter: TypeAdapter[ProjectsMapping] = TypeAdapter(ProjectsMapping)
+            raw_json = adapter.dump_json(data, exclude_none=True)
             write_raw_json_cache(raw_json, options.breadcrumbs)
 
     no_work = True
