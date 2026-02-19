@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: CC0-1.0
-# SPDX-FileCopyrightText: 2024-2025 Anna <cyber@sysrq.in>
+# SPDX-FileCopyrightText: 2024-2026 Anna <cyber@sysrq.in>
 
 [build-system]
 requires = ["flit_core >=3.2,<4"]
@@ -7,7 +7,7 @@ build-backend = "flit_core.buildapi"
 
 [project]
 name = "find-work-repology"
-version = "1.0.0"
+version = "1.0.1"
 authors = [
     {name = "Anna", email = "cyber@sysrq.in"},
 ]
