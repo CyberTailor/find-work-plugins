@@ -53,6 +53,23 @@ class PkgcorePM:
         return pkgcore.ebuild.repository.tree(self._config, repo_config)
 
 
+def _get_packages_for_maintainer(repo_path: Path, maintainer: str) -> list[str]:
+    """
+    Find packages matching a maintainer by scanning metadata.xml files.
+    """
+    packages = []
+    for metadata in sorted(repo_path.glob("*/*/metadata.xml")):
+        content = metadata.read_text()
+        cat = metadata.parent.parent.name
+        pkg = metadata.parent.name
+        if maintainer == "maintainer-needed@gentoo.org":
+            if "<maintainer" not in content:
+                packages.append(f"{cat}/{pkg}")
+        elif maintainer in content:
+            packages.append(f"{cat}/{pkg}")
+    return packages
+
+
 @validate_call
 def do_pkgcheck_scan(options: MainOptions) -> SortedDict[
     str, SortedSet[PkgcheckResult]
@@ -84,7 +101,16 @@ def do_pkgcheck_scan(options: MainOptions) -> SortedDict[
         cli_opts += ["--jobs", str(plugin_options.jobs)]
     if plugin_options.keywords:
         cli_opts += ["--keywords", ",".join(plugin_options.keywords)]
-    if options.category:
+
+    if options.maintainer:
+        packages = _get_packages_for_maintainer(
+            Path(repo.location), options.maintainer
+        )
+        if options.category:
+            packages = [p for p in packages
+                        if p.startswith(options.category + "/")]
+        cli_opts.extend(str(Path(repo.location) / pkg) for pkg in packages)
+    elif options.category:
         category_path = Path(repo.location) / options.category
         cli_opts.append(str(category_path))
 
@@ -95,31 +121,10 @@ def do_pkgcheck_scan(options: MainOptions) -> SortedDict[
                 continue
 
         package: str = "/".join([result.category, result.package])
-        pkg_atom: atom
-        if need_pm:
-            pkg_atom = atom(package).unversioned_atom
 
         if options.only_installed:
+            pkg_atom = atom(package).unversioned_atom
             if pkg_atom not in pm.installed:
-                continue
-
-        if options.maintainer == "maintainer-needed@gentoo.org":
-            for pkg_match in repo.itermatch(pkg_atom):
-                if len(pkg_match.maintainers) == 0:
-                    break
-            else:
-                continue
-        elif options.maintainer:
-            maint_matched = False
-            for pkg_match in repo.itermatch(pkg_atom):
-                for maint in pkg_match.maintainers:
-                    if maint.email == options.maintainer:
-                        maint_matched = True
-                        break
-
-                if maint_matched:
-                    break
-            else:
                 continue
 
         data.setdefault(package, SortedSet()).add(
