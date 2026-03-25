@@ -27,6 +27,9 @@ class PkgcheckOptions(OptionsBase):
     #: Message of the pkgcheck warning, e.g. 'uses deprecated EAPI 5'.
     message: str = ""
 
+    #: Number of parallel jobs for pkgcheck (0 = use pkgcheck's default).
+    jobs: int = 0
+
     @property
     def attr_order(self) -> Sequence[str]:
         return ["repo", "keywords", "message"]

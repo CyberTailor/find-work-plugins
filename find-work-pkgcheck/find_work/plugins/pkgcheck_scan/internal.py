@@ -80,6 +80,8 @@ def do_pkgcheck_scan(options: MainOptions) -> SortedDict[
         "--scope", "pkg,ver",
         "--filter", "latest",  # TODO: become version-aware
     ]
+    if plugin_options.jobs > 0:
+        cli_opts += ["--jobs", str(plugin_options.jobs)]
     if plugin_options.keywords:
         cli_opts += ["--keywords", ",".join(plugin_options.keywords)]
     if options.category:

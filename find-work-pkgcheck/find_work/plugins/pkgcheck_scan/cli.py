@@ -29,9 +29,11 @@ from find_work.plugins.pkgcheck_scan.options import PkgcheckOptions
               help="Keywords to scan for.")
 @click.option("-r", "--repo", metavar="REPO", required=True,
               help="Repository name or absolute path.")
+@click.option("-j", "--jobs", metavar="JOBS", type=int, default=0,
+              help="Number of parallel jobs for pkgcheck.")
 @click.pass_obj
 def pkgcheck(options: MainOptions, message: str | None, keywords: str | None,
-             repo: str, *, indirect_call: bool = False) -> None:
+             repo: str, jobs: int, *, indirect_call: bool = False) -> None:
     """
     Use pkgcheck to find work.
     """
@@ -44,6 +46,7 @@ def pkgcheck(options: MainOptions, message: str | None, keywords: str | None,
         plugin_options.repo = repo
         plugin_options.keywords = (keywords or "").split(",")
         plugin_options.message = message or ""
+        plugin_options.jobs = jobs
 
 
 @pkgcheck.command(aliases=["s"])
