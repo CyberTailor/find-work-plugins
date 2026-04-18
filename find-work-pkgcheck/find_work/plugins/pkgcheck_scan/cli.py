@@ -52,7 +52,7 @@ def pkgcheck(options: MainOptions, message: str | None, jobs: int,
 
     if not indirect_call:
         plugin_options.repo = repo
-        plugin_options.keywords = (keywords or "").split(",")
+        plugin_options.keywords = list(filter(None, (keywords or "").split(",")))
         plugin_options.message = message or ""
         plugin_options.jobs = jobs
 
