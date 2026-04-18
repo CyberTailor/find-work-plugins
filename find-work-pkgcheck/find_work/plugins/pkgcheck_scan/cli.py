@@ -30,15 +30,16 @@ from find_work.plugins.pkgcheck_scan.options import PkgcheckOptions
              epilog="See `man find-work-pkgcheck` for the full help.")
 @click.option("-M", "--message", metavar="LIST",
               help="Warning message to search for.")
+@click.option("-j", "--jobs", metavar="JOBS", type=int, default=0,
+              help="Number of parallel jobs for pkgcheck.")
 @click.option("-k", "--keywords", metavar="LIST",
               help="Keywords to scan for.")
 @click.option("-r", "--repo", metavar="REPO", required=True,
               help="Repository name or absolute path.")
-@click.option("-j", "--jobs", metavar="JOBS", type=int, default=0,
-              help="Number of parallel jobs for pkgcheck.")
 @click.pass_obj
-def pkgcheck(options: MainOptions, message: str | None, keywords: str | None,
-             repo: str, jobs: int, *, indirect_call: bool = False) -> None:
+def pkgcheck(options: MainOptions, message: str | None, jobs: int,
+             keywords: str | None, repo: str, *,
+             indirect_call: bool = False) -> None:
     """
     Use pkgcheck to find work.
     """

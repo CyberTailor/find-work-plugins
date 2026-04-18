@@ -1,8 +1,8 @@
 .\" SPDX-FileType: DOCUMENTATION
-.\" SPDX-FileCopyrightText: 2024 Anna <cyber@sysrq.in>
+.\" SPDX-FileCopyrightText: 2024-2026 Anna <cyber@sysrq.in>
 .\" SPDX-License-Identifier: WTFPL
 .\" No warranty
-.Dd July 1, 2024
+.Dd April 19, 2026
 .Dt FIND-WORK-PKGCHECK 1
 .Os
 .Sh NAME
@@ -12,6 +12,7 @@
 .Nm
 .Fl r Ar repo
 .Op Fl M Ar text
+.Op Fl j Ar jobs
 .Op Fl k Ar keyword
 .Ar command
 .Sh DESCRIPTION
@@ -31,6 +32,10 @@ are as follows:
 Message of the pkgcheck warning, e.g.
 .Qq uses deprecated EAPI 5 .
 .
+.It Fl j Ar jobs , Fl -jobs Ar jobs
+Number of parallel jobs for
+.Xr pkgcheck 1 .
+.
 .It Fl k Ar keyword , Fl -keywords Ar keyword
 Comma-separated list of pkgcheck keywords, e.g. DeprecatedEapi.
 .
@@ -46,7 +51,7 @@ can be one of the following:
 .Bl -tag -width Ds -offset indent
 .It Ic scan Pq alias: Ic s
 Scan a repository for QA issues.
-Results with scopes outside of package level are ignored.
+Results with scopes outside of the package level are ignored.
 .
 .El
 .Sh EXIT STATUS
