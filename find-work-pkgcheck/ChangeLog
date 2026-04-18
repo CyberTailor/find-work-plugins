@@ -1,3 +1,21 @@
+2026-04-19  Anna  <cyber@sysrq.in>
+
+	* 1.1.0 release
+
+	* improve pre-filtering by maintainer: parse metadata.xml files and
+	use caching.
+
+	* find-work-pkgcheck.1: document a new option.
+
+	* cli.py(pkgcheck): filter out empty keywords.
+
+2026-03-25  Matt Turner  <mattst88@gentoo.org>
+
+	* add -j/--jobs option to control pkgcheck parallelism.
+
+	* internal.py: pre-filter packages by maintainer before scanning
+	(saves a lot of time).
+
 2024-11-30  Anna  <cyber@sysrq.in>
 
 	* 1.0.0 release
