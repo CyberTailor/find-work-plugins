@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: WTFPL
-# SPDX-FileCopyrightText: 2024 Anna <cyber@sysrq.in>
+# SPDX-FileCopyrightText: 2024-2026 Anna <cyber@sysrq.in>
 # No warranty
 
 """
@@ -32,4 +32,4 @@ class PkgcheckOptions(OptionsBase):
 
     @property
     def attr_order(self) -> Sequence[str]:
-        return ["repo", "keywords", "message"]
+        return ["repo"]
