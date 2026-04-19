@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: WTFPL
-# SPDX-FileCopyrightText: 2024 Anna <cyber@sysrq.in>
+# SPDX-FileCopyrightText: 2024-2026 Anna <cyber@sysrq.in>
 # No warranty
 
 """
@@ -13,8 +13,7 @@ from datetime import datetime
 from typing import Any
 
 import gentoopm
-import pydantic_core
-from pydantic import validate_call
+from pydantic import JsonValue, TypeAdapter, validate_call
 
 from find_work.core.cli.options import MainOptions
 from find_work.core.types.results import BugView
@@ -37,7 +36,7 @@ logger = logging.getLogger("find_work.plugins.bugzilla")
 
 @validate_call
 def bugs_from_raw_json(raw_json: str | bytes) -> list[Bug]:
-    data: list[dict] = pydantic_core.from_json(raw_json)
+    data = TypeAdapter(list[dict[str, JsonValue]]).validate_json(raw_json)
     with requests_session() as session:
         bz = bugzilla.Bugzilla(BUGZILLA_URL, requests_session=session,
                                force_rest=True)
@@ -46,7 +45,10 @@ def bugs_from_raw_json(raw_json: str | bytes) -> list[Bug]:
 
 def bugs_to_raw_json(data: Collection[Bug]) -> bytes:
     raw_data = [bug.get_raw_data() for bug in data]
-    return pydantic_core.to_json(raw_data, exclude_none=True)
+    return (
+        TypeAdapter(list[dict[str, JsonValue]])
+        .dump_json(raw_data, exclude_none=True)
+    )
 
 
 @validate_call

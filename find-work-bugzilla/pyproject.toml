@@ -21,7 +21,6 @@ dependencies = [
     "find-work[tabulate]<2,>=1",
     "gentoopm<2",
     "pydantic<3,>=2",
-    "pydantic-core<3,>=2",
     "python-bugzilla",
 ]
 classifiers = [
