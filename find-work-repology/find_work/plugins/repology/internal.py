@@ -32,7 +32,7 @@ async def fetch_outdated(options: MainOptions) -> ProjectsMapping:
         options.children["repology"]
     )
 
-    filters: dict = {}
+    filters: dict[str, str] = {}
     if options.maintainer:
         filters["maintainer"] = options.maintainer
     if options.category:
