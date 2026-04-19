@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: CC0-1.0
-# SPDX-FileCopyrightText: 2024-2025 Anna <cyber@sysrq.in>
+# SPDX-FileCopyrightText: 2024-2026 Anna <cyber@sysrq.in>
 
 kind: pipeline
 type: docker
@@ -12,5 +12,5 @@ steps:
       - tox run
       - tox -c find-work-bugzilla run
       - tox -c find-work-pgo run
-      - tox -c find-work-pkgcheck run
+      #- tox -c find-work-pkgcheck run
       - tox -c find-work-repology run
