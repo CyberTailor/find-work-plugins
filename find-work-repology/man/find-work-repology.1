@@ -2,7 +2,7 @@
 .\" SPDX-FileCopyrightText: 2024 Anna <cyber@sysrq.in>
 .\" SPDX-License-Identifier: WTFPL
 .\" No warranty
-.Dd July 1, 2024
+.Dd April 19, 2026
 .Dt FIND-WORK-REPOLOGY 1
 .Os
 .Sh NAME
@@ -68,6 +68,11 @@ and can lead to false matches.
 .
 .El
 .
+.It Ic problems
+.Dl Pq alias: Ic pr , Ic p
+.Pp
+Find problems in the repository.
+.
 .El
 .Sh EXIT STATUS
 .Ex -std
@@ -75,6 +80,10 @@ and can lead to false matches.
 Find outdated GURU packages installed on your system:
 .Pp
 .Dl "$ find-work -I repology -r gentoo_ovl_guru outdated"
+.Pp
+Find orphaned Gentoo packages with problems:
+.Pp
+.Dl "$ find-work -O repology -r gentoo problems"
 .Sh AUTHORS
 .An -nosplit
 The

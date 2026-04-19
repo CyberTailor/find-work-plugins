@@ -6,15 +6,15 @@
 Internal functions that don't depend on any CLI functionality.
 """
 
-from collections.abc import Collection, Mapping, Set
+from collections.abc import Collection, Mapping, Sequence, Set
 
 import gentoopm
 import repology_client
 import repology_client.exceptions
 from gentoopm.basepm.atom import PMAtom
 from pydantic import validate_call
-from repology_client.types import Package
-from sortedcontainers import SortedSet
+from repology_client.types import Package, Problem
+from sortedcontainers import SortedDict, SortedList, SortedSet
 
 from find_work.core.cli.options import MainOptions
 from find_work.core.types.results import VersionBump
@@ -24,6 +24,22 @@ from find_work.plugins.repology.options import RepologyOptions
 
 PackageSet = Set[Package]
 ProjectsMapping = Mapping[str, PackageSet]
+
+
+@validate_call
+async def fetch_problems(options: MainOptions) -> Sequence[Problem]:
+    plugin_options = RepologyOptions.model_validate(
+        options.children["repology"]
+    )
+
+    filters: dict[str, str] = {}
+    if options.maintainer:
+        filters["maintainer"] = options.maintainer
+
+    async with aiohttp_session() as session:
+        return await repology_client.get_problems(repo=plugin_options.repo,
+                                                  count=5_000, session=session,
+                                                  **filters)
 
 
 @validate_call
@@ -72,4 +88,26 @@ def collect_version_bumps(data: Collection[PackageSet],
             if not (options.only_installed and latest.key not in pm.installed):
                 result.add(VersionBump(str(latest.key), str(latest.version),
                                        new_version or "(unknown)"))
+    return result
+
+
+def collect_problems(data: Sequence[Problem],
+                     options: MainOptions) -> SortedDict[PMAtom, SortedList[Problem]]:
+
+    pm = gentoopm.get_package_manager()
+
+    result: SortedDict[PMAtom, SortedList[Problem]] = SortedDict(
+        lambda a: (a.key, a.version)
+    )
+    for problem in data:
+        if problem.srcname is not None:
+            atom = pm.Atom(f"={problem.srcname}-{problem.rawversion}")
+            if not (
+                options.category and atom.key.category != options.category
+                or options.only_installed and atom.key not in pm.installed
+            ):
+                result.setdefault(
+                    atom, SortedList(key=lambda p: p.type)
+                ).add(problem)
+
     return result

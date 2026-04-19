@@ -7,6 +7,7 @@ Implementation of CLI commands for the Repology plugin.
 """
 
 import asyncio
+from collections.abc import Sequence
 
 import click
 from click_aliases import ClickAliasedGroup
@@ -76,6 +77,50 @@ async def _outdated(options: MainOptions) -> None:
         return options.exit(Result.NO_WORK)
 
 
+@validate_call
+async def _problems(options: MainOptions) -> None:
+    import repology_client.exceptions
+    from repology_client.types import Problem
+    from find_work.plugins.repology.internal import (
+        collect_problems,
+        fetch_problems,
+    )
+    from find_work.plugins.repology.types import ProblemGroup
+
+    dots = ProgressDots(options.verbose)
+
+    data: Sequence[Problem]
+    with dots(Status.CACHE_READ):
+        raw_data = read_raw_json_cache(options.breadcrumbs)
+    if raw_data:
+        with dots(Status.CACHE_LOAD):
+            data = TypeAdapter(Sequence[Problem]).validate_json(raw_data)
+    else:
+        try:
+            with dots("Fetching data from Repology API"):
+                data = await fetch_problems(options)
+        except repology_client.exceptions.EmptyResponse:
+            return options.exit(Result.EMPTY_RESPONSE)
+        with dots(Status.CACHE_WRITE):
+            adapter: TypeAdapter[Sequence[Problem]] = TypeAdapter(Sequence[Problem])
+            raw_json = adapter.dump_json(data, exclude_none=True)
+            write_raw_json_cache(raw_json, options.breadcrumbs)
+
+    no_work = True
+    with options.get_reporter_for(ProblemGroup) as reporter:
+        for package, results in collect_problems(data, options).items():
+            reporter.add_result(
+                ProblemGroup(
+                    atom=f"{package.key}-{package.version}",
+                    problems=results
+                )
+            )
+            no_work = False
+
+    if no_work:
+        return options.exit(Result.NO_WORK)
+
+
 @click.group(cls=ClickAliasedGroup,
              epilog="See `man find-work-repology` for the full help.")
 @click.option("-r", "--repo", metavar="NAME", required=True,
@@ -124,3 +169,19 @@ def outdated(ctx: click.Context, version_part: VersionPart | None = None, *,
     cmd_options.version_part = version_part
 
     asyncio.run(_outdated(options))
+
+
+@repology.command(aliases=["pr", "p"])
+@click.pass_context
+def problems(ctx: click.Context, *, init_parent: bool = False) -> None:
+    """
+    Find problems in the repository.
+    """
+
+    options: MainOptions = ctx.obj
+    if init_parent:
+        ctx.invoke(repology, indirect_call=True)
+
+    options.breadcrumbs.feed("problems")
+
+    asyncio.run(_problems(options))
