@@ -19,7 +19,7 @@ from sortedcontainers import (
 )
 
 from find_work.core.cli.options import MainOptions
-from find_work.core.types.results import PkgcheckResultsGroup
+from find_work.core.types.results import PkgcheckResult, PkgcheckResultsGroup
 from find_work.core.utils import aiohttp_session
 
 from find_work.plugins.pgo.constants import PGO_BASE_URL
@@ -76,6 +76,6 @@ def collect_stable_requests(
                 continue
 
         groups.setdefault(atom, {"atom": atom, "results": SortedSet()})
-        results = typing.cast(SortedSet, groups[atom]["results"])
+        results = typing.cast(SortedSet[PkgcheckResult], groups[atom]["results"])
         results.add(item.as_pkgcheck)
     return groups.values()
