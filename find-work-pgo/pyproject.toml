@@ -1,8 +1,8 @@
 # SPDX-License-Identifier: CC0-1.0
-# SPDX-FileCopyrightText: 2024-2025 Anna <cyber@sysrq.in>
+# SPDX-FileCopyrightText: 2024-2026 Anna <cyber@sysrq.in>
 
 [build-system]
-requires = ["flit_core >=3.2,<4"]
+requires = ["flit_core >=3.11,<4"]
 build-backend = "flit_core.buildapi"
 
 [project]
@@ -13,7 +13,7 @@ authors = [
 ]
 dynamic = ["description"]
 readme = "README.md"
-license = {text = "WTFPL"}
+license = "WTFPL"
 requires-python = ">=3.11"
 dependencies = [
     "click",
@@ -29,7 +29,6 @@ classifiers = [
     "Framework :: Pydantic",
     "Framework :: Pydantic :: 2",
     "Intended Audience :: Developers",
-    "License :: DFSG approved",
     "Operating System :: POSIX",
     "Programming Language :: Python",
     "Programming Language :: Python :: 3",
@@ -79,6 +78,8 @@ addopts = "--doctest-modules --import-check"
 [tool.mypy]
 disallow_untyped_defs = true
 no_implicit_optional = true
+disallow_any_generics = true
+plugins = ["pydantic.mypy"]
 
 [[tool.mypy.overrides]]
 module = [
